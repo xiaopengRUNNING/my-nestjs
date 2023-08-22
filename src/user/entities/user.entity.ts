@@ -14,9 +14,9 @@ export type UserDocument = User & Document;
 })
 export class User {
   @Prop({ unique: true, required: true })
-  account: string;
+  username: string;
 
-  @Prop({})
+  @Prop({ required: true })
   password: string;
 
   @Prop({ required: true })
