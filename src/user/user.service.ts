@@ -13,24 +13,31 @@ export class UserService {
   create(createUserDto: CreateUserDto) {
     const newUser = new this.userModel(createUserDto);
 
+    // 明文密码加密
     newUser.password = bcrypt.hashSync(newUser.password, 10);
 
     return newUser.save();
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    const data = await this.userModel.find({}, { password: 0 });
+
+    return { data };
   }
 
-  findOne(id: number) {
-    return { data: `This action returns a #${id} user` };
+  async findOne(id: string) {
+    const data = await this.userModel.findById(id, { password: 0 });
+    return { data };
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  update(id: string, updateUserDto: UpdateUserDto) {
+    return this.userModel.findOneAndUpdate(
+      { _id: id },
+      { $set: updateUserDto },
+    );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(id: string) {
+    return this.userModel.findByIdAndRemove(id);
   }
 }
