@@ -20,9 +20,9 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, Response<T>> {
     next: CallHandler,
   ): Observable<Response<T>> {
     return next.handle().pipe(
-      map(({ data, message }) => ({
+      map(({ data, message, success }) => ({
         code: 200,
-        success: true,
+        success: success !== undefined ? success : true,
         result: data,
         message: message || '操作成功',
       })),
