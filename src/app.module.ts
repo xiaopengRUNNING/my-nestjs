@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
+import { SystemModule } from './system/system.modules';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { UserModule } from './user/user.module';
       'mongodb://root:pengxincheng123456@localhost:27017/basics-database?authSource=admin',
     ),
     UserModule,
+    SystemModule,
   ],
   controllers: [AppController],
   providers: [AppService],
