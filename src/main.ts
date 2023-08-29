@@ -5,9 +5,9 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import { ResponseInterceptor } from './interceptors/response.interceptor';
-import { HttpExceptionFilter } from './filters/http-exception.filter';
-import { ErrorExceptionsFilter } from './filters/exception.filter';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { ErrorExceptionsFilter } from './common/filters/exception.filter';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
