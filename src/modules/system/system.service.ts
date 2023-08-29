@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import * as bcrypt from 'bcrypt';
+import { CryptoUtil } from 'src/utils/crypto.util';
 import { User } from 'src/modules/user/entities/user.entity';
 import { UserLoginDto } from './dto/user-login.dto';
 
@@ -18,7 +18,10 @@ export class SystemService {
       return { success: false, message: '该账号不存在!' };
     }
 
-    const flag = bcrypt.compareSync(userLoginDto.password, data.password);
+    const flag = CryptoUtil.comparePassWord(
+      userLoginDto.password,
+      data.password,
+    );
 
     // 密码正确
     if (flag) {

@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import * as bcrypt from 'bcrypt';
+import { CryptoUtil } from 'src/utils/crypto.util';
 
 @Injectable()
 export class UserService {
@@ -14,7 +14,7 @@ export class UserService {
     const newUser = new this.userModel(createUserDto);
 
     // 明文密码加密
-    newUser.password = bcrypt.hashSync(newUser.password, 10);
+    newUser.password = CryptoUtil.encryptPassWord(newUser.password);
 
     return newUser.save();
   }
