@@ -4,12 +4,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
 import { SystemModule } from './modules/system/system.modules';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     MongooseModule.forRoot(
       'mongodb://root:pengxincheng123456@localhost:27017/basics-database?authSource=admin',
     ),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env'] }),
     UserModule,
     SystemModule,
   ],
