@@ -10,8 +10,11 @@ import { CryptoUtil } from 'src/utils/crypto.util';
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  create(createUserDto: CreateUserDto) {
-    const newUser = new this.userModel(createUserDto);
+  create(createUserDto: CreateUserDto, requestUser: User) {
+    const newUser = new this.userModel({
+      ...createUserDto,
+      createBy: requestUser.username,
+    });
 
     // 明文密码加密
     newUser.password = CryptoUtil.encryptPassWord(newUser.password);
@@ -30,10 +33,10 @@ export class UserService {
     return { data };
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
+  update(id: string, updateUserDto: UpdateUserDto, requestUser: User) {
     return this.userModel.findOneAndUpdate(
       { _id: id },
-      { $set: updateUserDto },
+      { $set: { ...updateUserDto, updateBy: requestUser.username } },
     );
   }
 
