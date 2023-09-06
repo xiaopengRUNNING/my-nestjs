@@ -33,6 +33,15 @@ export class User {
 
   @Prop({})
   updateBy: string;
+
+  @Prop({ default: false })
+  deleted: boolean;
+
+  @Prop({})
+  deleteBy: string;
+
+  @Prop({})
+  deleteTime: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

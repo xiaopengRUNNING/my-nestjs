@@ -49,7 +49,17 @@ export class UserController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(id);
+  remove(@Param('id') id: string, @Req() request: FastifyRequest) {
+    return this.userService.remove(id, request[REQUEST_USER_KEY]);
+  }
+
+  @Patch('cancelRemove/:id')
+  cancelRemove(@Param('id') id: string, @Req() request: FastifyRequest) {
+    return this.userService.cancelRemove(id, request[REQUEST_USER_KEY]);
+  }
+
+  @Delete('delete/:id')
+  delete(@Param('id') id: string) {
+    return this.userService.delete(id);
   }
 }
