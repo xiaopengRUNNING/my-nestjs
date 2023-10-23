@@ -19,16 +19,18 @@ export class SystemService {
   ) {}
 
   async login(userLoginDto: UserLoginDto) {
-    // 调用 lean 方法，省去生成完整的文档是实例，直接返回一个 js 对象
-    const { password, ...userInfo } = await this.userModel
+    // 调用 lean 方法，省去生成完整的文档实例，直接返回一个 js 对象
+    const user = await this.userModel
       .findOne({
         username: userLoginDto.username,
       })
       .lean();
 
-    if (!userInfo) {
+    if (!user) {
       return { success: false, message: '该账号不存在!' };
     }
+
+    const { password, ...userInfo } = user;
 
     const flag = CryptoUtil.comparePassWord(userLoginDto.password, password);
 
