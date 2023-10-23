@@ -24,7 +24,7 @@ export class UserService {
   }
 
   async findAll() {
-    const data = await this.userModel.find({ deleted: false }, { password: 0 });
+    const data = await this.userModel.find({ deleted: 0 }, { password: 0 });
 
     return { data };
   }
@@ -48,7 +48,7 @@ export class UserService {
       { _id: id },
       {
         $set: {
-          deleted: true,
+          deleted: 1,
           deleteBy: requestUser.username,
           deleteTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
         },
@@ -63,7 +63,7 @@ export class UserService {
       {
         $set: {
           updateBy: requestUser.username,
-          deleted: false,
+          deleted: 0,
           deleteBy: '',
           deleteTime: '',
         },

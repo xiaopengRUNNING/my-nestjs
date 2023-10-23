@@ -34,8 +34,8 @@ export class User {
   @Prop({})
   updateBy: string;
 
-  @Prop({ default: false })
-  deleted: boolean;
+  @Prop({ default: 0 })
+  deleted: number;
 
   @Prop({})
   deleteBy: string;
