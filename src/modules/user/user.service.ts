@@ -29,6 +29,35 @@ export class UserService {
     return { data };
   }
 
+  async findList(queryUserListDto) {
+    const { pageNo, pageSize, name } = queryUserListDto;
+    const selector = {
+      $and: [
+        { deleted: { $eq: 0 } },
+        { name: { $regex: new RegExp(name, 'm') } },
+      ],
+    };
+    const no = pageNo && Number.isInteger(+pageNo) && pageNo > 0 ? +pageNo : 1;
+    const size =
+      pageSize && Number.isInteger(+pageSize) && pageSize > 0 ? +pageSize : 10;
+
+    const total = await this.userModel.count(selector);
+    const records = await this.userModel
+      .find(selector, { password: 0 })
+      .skip((no - 1) * size)
+      .limit(size);
+
+    return {
+      data: {
+        records,
+        total,
+        size,
+        current: no,
+        pages: Math.ceil(total / size),
+      },
+    };
+  }
+
   async findOne(id: string) {
     const data = await this.userModel.findById(id, { password: 0 });
     return { data };

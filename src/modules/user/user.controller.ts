@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Req,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -30,6 +31,12 @@ export class UserController {
   @Get('getAll')
   findAll() {
     return this.userService.findAll();
+  }
+
+  @ApiOperation({ summary: '分页查询' })
+  @Get('getList')
+  findList(@Query() queryUserListDto) {
+    return this.userService.findList(queryUserListDto);
   }
 
   @ApiOperation({ summary: '根据ID查询用户' })
@@ -59,7 +66,7 @@ export class UserController {
   }
 
   @ApiOperation({ summary: '取消逻辑删除' })
-  @Patch('cancelRemove/:id')
+  @Patch('cancelDelete/:id')
   cancelRemove(@Param('id') id: string, @Req() request: FastifyRequest) {
     return this.userService.cancelRemove(id, request[REQUEST_USER_KEY]);
   }
