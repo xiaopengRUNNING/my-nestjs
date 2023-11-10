@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
 import { SystemModule } from './modules/system/system.modules';
 import { ConfigModule } from '@nestjs/config';
+import { SocketModule } from './socket/socket.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env'] }),
     UserModule,
     SystemModule,
+    SocketModule,
   ],
   controllers: [AppController],
   providers: [AppService],
